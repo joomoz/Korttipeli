@@ -72,7 +72,7 @@ public class Korttipakka {
     }
     
     /**
-     * @ensimmainenKortti palauttaa testitarkoituksiin pakan ensimmäisen kortin.
+     * Palauttaa testitarkoituksiin pakan ensimmäisen kortin.
      * 
      * @return Pelikortti.
      */
