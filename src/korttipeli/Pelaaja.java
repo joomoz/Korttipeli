@@ -1,8 +1,7 @@
 package korttipeli;
 
 /**
- * Pelaaja (Ihmispelaaja ja jakaja)
- *
+ * Pelaaja (Ihmispelaaja tai jakaja)
  * @author Joonas Moilanen, 2016
  */
 public class Pelaaja {
@@ -12,6 +11,10 @@ public class Pelaaja {
     private Pelikortti[] pelikasi = new Pelikortti[10];
     private int korttienmaara;
 
+    /**
+     * Konstruktori Pelaajalle
+     * @param nimi pelaajan nimi
+     */
     public Pelaaja(String nimi) {
         this.nimi = nimi;
         this.peliraha = 100;
@@ -20,11 +23,16 @@ public class Pelaaja {
         this.tyhjennaKasi();
     }
     
+    /**
+     * Konstruktori (kuormittava), kun pelaajalle ei anneta nimeä.
+     */
     public Pelaaja() {
         this("Ei nimeä");
     }
 
-    //Tyhjenna pelaajan käsi
+    /**
+     * Metodi tyhjentää pelaajan käden.
+     */
     public void tyhjennaKasi() {
         for (int i = 0; i < 10; i++) {
             this.pelikasi[i] = null;
@@ -32,14 +40,22 @@ public class Pelaaja {
         }
     }
 
+    /**
+     * Metodi lisää kortin pelaajan käteen ja kasvattaa kädessä olevien korttien määrää. 
+     * @param kortti: käteen lisättävä kortti
+     * @return true, jos käden summa on korkeintaan 21
+     */
     public boolean lisaaKortti(Pelikortti kortti) {
-        //Lisää kortti pelaajan käteen ja kasvata kädessä olevien korttien määrää.
         this.pelikasi[this.korttienmaara] = kortti;
         this.korttienmaara++;
 
         return (this.getSumma() <= 21);
     }
 
+    /**
+     * Metodi laskee käden arvon
+     * @return käden arvo
+     */
     public int getSumma() {
         int summa = 0;
         int kortinArvo;
@@ -66,6 +82,10 @@ public class Pelaaja {
         return summa;
     }
 
+    /**
+     * Metodi tulostaa kädessä olevat kortit
+     * @param naytaEkaKortti tarvittaessa ei näytä kortin arvoa
+     */
     public void tulostaKasi(boolean naytaEkaKortti) {
         for (int i = 0; i < this.korttienmaara; i++) {
             if (i == 0 && !naytaEkaKortti) {
@@ -76,14 +96,26 @@ public class Pelaaja {
         }
     }
 
+    /**
+     * Metodi palauttaa pelaajan rahamäärän
+     * @return peliraha
+     */
     public double getRaha() {
         return this.peliraha;
     }
 
+    /**
+     * Metodi muuttaa pelaajan rahamäärää
+     * @param maara, muutoksen määrä
+     */
     public void setRaha(double maara) {
         this.peliraha += maara;
     }
 
+    /**
+     * Metodi kertoo kädessä olevien korttien määrän.
+     * @return korttienmäärä
+     */
     public int korttienMaara() {
         return this.korttienmaara;
     }
