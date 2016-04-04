@@ -19,8 +19,7 @@ public class Pelaaja {
         this.nimi = nimi;
         this.peliraha = 100;
         this.korttienmaara = 0;
-
-        this.tyhjennaKasi();
+        this.pelikasi = new Pelikortti[10];
     }
     
     /**
