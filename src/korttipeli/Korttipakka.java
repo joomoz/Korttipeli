@@ -1,15 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package korttipeli;
 
 import java.util.Random;
 
 /**
  * Korttipakka
- *
  * @author Joonas Moilanen, 2016
  */
 public class Korttipakka {
@@ -20,7 +14,9 @@ public class Korttipakka {
     //Pakassa olevien korttien lukumäärä.
     private int korttienmaara;
 
-    //Konstruktori joka luo yhden pakallisen kortteja ja sekoittaa ne.
+    /**
+     * Konstruktori joka luo yhden pakallisen kortteja ja sekoittaa ne.
+     */
     public Korttipakka() {
         this.korttienmaara = 52;
         this.pakanKortit = new Pelikortti[this.korttienmaara];
@@ -38,7 +34,7 @@ public class Korttipakka {
     }
 
     /**
-     * Sekoita pakka satunnaisesti vaihtamalla kahden kortin paikkaa
+     * Metodi sekoittaa pakan satunnaisesti vaihtamalla kahden kortin paikkaa
      */
     public void sekoitus() {
         Random satunnainenNumero = new Random();
@@ -55,8 +51,11 @@ public class Korttipakka {
         }
     }
 
+    /**
+     * Metodi ottaa pakasta päällimmäisen kortin
+     * @return otettu kortti
+     */
     public Pelikortti otaKortti() {
-        //Ottaa pakasta päällimmäisen kortin
         Pelikortti ekaKortti = this.pakanKortit[0];
         //Siirrää muut kortit yhden indeksin ylemmäs
         for (int i = 1; i < this.korttienmaara; i++) {
@@ -72,14 +71,17 @@ public class Korttipakka {
     }
     
     /**
-     * @ensimmainenKortti palauttaa testitarkoituksiin pakan ensimmäisen kortin.
-     * 
+     * Metodi palauttaa testitarkoituksiin pakan ensimmäisen kortin.
      * @return Pelikortti.
      */
     public Pelikortti ensimmainenKortti() {
         return this.pakanKortit[0];
     }
     
+    /**
+     * Metodi kertoo pakassa olevien korttien maaran
+     * @return korttien maara
+     */
     public int korttienMaara() {
         return this.korttienmaara;
     }
