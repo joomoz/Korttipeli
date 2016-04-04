@@ -1,18 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package korttipeli;
 
-/**
- * Blackjack -peli
- *
- * @author Joonas Moilanen, 2016
- */
 import java.util.Scanner;
 
-public class Korttipeli {
+/**
+ * Blackjack
+ * 
+ * @author Joonas Moilanen, 2016
+ */
+
+public class Blackjack {
 
     public static void main(String[] args) {
         Scanner lukija = new Scanner(System.in);
@@ -25,14 +21,18 @@ public class Korttipeli {
         Pelaaja ihminen = new Pelaaja("Joonas");
         Pelaaja jakaja = new Pelaaja("Jakaja");
 
-        //Tästä alkaa itse peli
-        // Peli loppuu kun pelaajan rahat loppuvat
+        /**
+         * Tästä alkaa itse peli.
+         * Peli loppuu kun pelaajan rahat loppuvat.
+         */
         while (ihminen.getRaha() > 0) {
             System.out.println("** Uusi pelikierros **");
             //Kerrotaan pelaajan rahatilanne
             System.out.println("Pelaajalla on " + ihminen.getRaha() + " euroa.");
 
-            //Panoksen asetus
+            /**
+             * Panoksen asetus.
+             */
             System.out.println("Kerro panoksesi (int): ");
             while (true) {
                 panos = Integer.parseInt(lukija.nextLine());
@@ -45,13 +45,15 @@ public class Korttipeli {
             /**
              * Joka kerta pakka alustetaan, koska ei haluta pelata vajaalla
              * pakalla ja molempien pelaajien edellisen kierroksen kortit
-             * kerätään pois
+             * kerätään pois.
              */
             korttipakka = new Korttipakka();
             ihminen.tyhjennaKasi();
             jakaja.tyhjennaKasi();
 
-            //Aluksi molemmille jaetaan kaksi korttia.
+            /**
+             * Aluksi molemmille jaetaan kaksi korttia.
+             */
             ihminen.lisaaKortti(korttipakka.otaKortti());
             jakaja.lisaaKortti(korttipakka.otaKortti());
             ihminen.lisaaKortti(korttipakka.otaKortti());
@@ -111,6 +113,12 @@ public class Korttipeli {
         System.out.println("Rahasi loppuivat ja sinut heitettiin ulos pöydästä.");
     }
 
+    /**
+     * Metodi voiton tarkastamiseen.
+     * @param ihminen pelaaja
+     * @param jakaja jakaja
+     * @param panos kierroksen panos
+     */
     private static void voittikoPelaaja(Pelaaja ihminen, Pelaaja jakaja, int panos) {
         int ihmisenSumma = ihminen.getSumma();
         int jakajanSumma = jakaja.getSumma();

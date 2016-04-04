@@ -10,7 +10,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * KorttipakkaTest
  * @author Joonas
  */
 public class KorttipakkaTest {

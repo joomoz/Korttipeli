@@ -13,9 +13,9 @@ public class Pelikortti {
     private int numero;
     
     /**
-     * Konstruktori Pelikortille
-     * @param maa, kortin maa
-     * @param numero, kortin arvo
+     * Konstruktori Pelikortille.
+     * @param maa kortin maa
+     * @param numero kortin arvo
      */
     public Pelikortti(Maa maa, int numero) {
         this.maa = maa;
@@ -23,7 +23,7 @@ public class Pelikortti {
     }
 
     /**
-     * Metodi palauttaa kortin arvon
+     * Metodi palauttaa kortin arvon.
      * @return numero
      */
     public int getNumero() {
@@ -31,7 +31,7 @@ public class Pelikortti {
     }
 
     /**
-     * Metodi palauttaa kortin maan
+     * Metodi palauttaa kortin maan.
      * @return maa
      */
     public Maa getMaa() {
@@ -39,7 +39,7 @@ public class Pelikortti {
     }
 
     /**
-     * Metodi tulostukseen
+     * Metodi tulostukseen.
      * @return tulostus String
      */
     @Override

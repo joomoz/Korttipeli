@@ -11,7 +11,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * PelaajaTest
  * @author Joonas
  */
 public class PelaajaTest {

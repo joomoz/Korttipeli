@@ -34,7 +34,7 @@ public class Korttipakka {
     }
 
     /**
-     * Metodi sekoittaa pakan satunnaisesti vaihtamalla kahden kortin paikkaa
+     * Metodi sekoittaa pakan satunnaisesti vaihtamalla kahden kortin paikkaa.
      */
     public void sekoitus() {
         Random satunnainenNumero = new Random();
@@ -52,7 +52,7 @@ public class Korttipakka {
     }
 
     /**
-     * Metodi ottaa pakasta päällimmäisen kortin
+     * Metodi ottaa pakasta päällimmäisen kortin.
      * @return otettu kortti
      */
     public Pelikortti otaKortti() {
@@ -79,7 +79,7 @@ public class Korttipakka {
     }
     
     /**
-     * Metodi kertoo pakassa olevien korttien maaran
+     * Metodi kertoo pakassa olevien korttien maaran.
      * @return korttien maara
      */
     public int korttienMaara() {

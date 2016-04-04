@@ -12,7 +12,7 @@ public class Pelaaja {
     private int korttienmaara;
 
     /**
-     * Konstruktori Pelaajalle
+     * Konstruktori Pelaajalle.
      * @param nimi pelaajan nimi
      */
     public Pelaaja(String nimi) {
@@ -53,7 +53,7 @@ public class Pelaaja {
     }
 
     /**
-     * Metodi laskee käden arvon
+     * Metodi laskee käden arvon.
      * @return käden arvo
      */
     public int getSumma() {
@@ -83,7 +83,7 @@ public class Pelaaja {
     }
 
     /**
-     * Metodi tulostaa kädessä olevat kortit
+     * Metodi tulostaa kädessä olevat kortit.
      * @param naytaEkaKortti tarvittaessa ei näytä kortin arvoa
      */
     public void tulostaKasi(boolean naytaEkaKortti) {
@@ -97,7 +97,7 @@ public class Pelaaja {
     }
 
     /**
-     * Metodi palauttaa pelaajan rahamäärän
+     * Metodi palauttaa pelaajan rahamäärän.
      * @return peliraha
      */
     public double getRaha() {
@@ -105,8 +105,8 @@ public class Pelaaja {
     }
 
     /**
-     * Metodi muuttaa pelaajan rahamäärää
-     * @param maara, muutoksen määrä
+     * Metodi muuttaa pelaajan rahamäärää.
+     * @param maara rahamäärän muutos
      */
     public void setRaha(double maara) {
         this.peliraha += maara;

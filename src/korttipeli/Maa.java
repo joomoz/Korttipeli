@@ -7,7 +7,6 @@ package korttipeli;
 
 /** 
  * Korttien eri maat
- * 
  * @author Joonas Moilanen, 2016
  */
 
