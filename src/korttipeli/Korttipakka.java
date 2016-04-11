@@ -9,7 +9,7 @@ import java.util.Random;
 public class Korttipakka {
 
     //Kaikki pakan kortit, ensimmäinen indeksi on pakan ylin kortti.
-    private Pelikortti[] pakanKortit;
+    private final Pelikortti[] pakanKortit;
     
     //Pakassa olevien korttien lukumäärä.
     private int korttienmaara;
@@ -23,9 +23,9 @@ public class Korttipakka {
 
         int kortinPaikka = 0;
         //Luo kaikki kortit
-        for (int m = 0; m < 4; m++) {
-            for (int n = 1; n < 14; n++) {
-                this.pakanKortit[kortinPaikka] = new Pelikortti(Maa.values()[m], n);
+        for (int maa = 0; maa < 4; maa++) {
+            for (int numero = 1; numero < 14; numero++) {
+                this.pakanKortit[kortinPaikka] = new Pelikortti(Maa.values()[maa], numero);
                 kortinPaikka++;
             }
         }
