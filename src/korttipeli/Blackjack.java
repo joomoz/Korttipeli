@@ -1,16 +1,25 @@
 package korttipeli;
 
 import java.util.Scanner;
+import javax.swing.SwingUtilities;
 
 /**
  * Blackjack
- * 
+ *
  * @author Joonas Moilanen, 2016
  */
-
 public class Blackjack {
 
     public static void main(String[] args) {
+        //Teksti- ja testiversio
+        //kaynnistaTekstiversio();
+        
+        //Graafinen versio
+        GUI kayttoliittyma = new GUI();
+        SwingUtilities.invokeLater(kayttoliittyma);
+    }
+
+    public static void kaynnistaTekstiversio() {
         Scanner lukija = new Scanner(System.in);
         System.out.println("Tervetuloa pelaamaan Blackjackia!");
         //Luodaan uusi sekoitettu korttipakka
@@ -18,12 +27,11 @@ public class Blackjack {
         int panos = 1;
 
         //Luo pelaaja
-        Pelaaja ihminen = new Pelaaja("Joonas");
-        Pelaaja jakaja = new Pelaaja("Jakaja");
+        Pelaaja ihminen = new Pelaaja();
+        Pelaaja jakaja = new Pelaaja();
 
         /**
-         * Tästä alkaa itse peli.
-         * Peli loppuu kun pelaajan rahat loppuvat.
+         * Tästä alkaa itse peli. Peli loppuu kun pelaajan rahat loppuvat.
          */
         while (ihminen.getRaha() > 0) {
             System.out.println("** Uusi pelikierros **");
@@ -115,6 +123,7 @@ public class Blackjack {
 
     /**
      * Metodi voiton tarkastamiseen.
+     *
      * @param ihminen pelaaja
      * @param jakaja jakaja
      * @param panos kierroksen panos

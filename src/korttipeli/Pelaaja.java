@@ -6,27 +6,17 @@ package korttipeli;
  */
 public class Pelaaja {
 
-    private String nimi;
     private double peliraha;
     private Pelikortti[] pelikasi = new Pelikortti[10];
     private int korttienmaara;
 
     /**
      * Konstruktori Pelaajalle.
-     * @param nimi pelaajan nimi
      */
-    public Pelaaja(String nimi) {
-        this.nimi = nimi;
+    public Pelaaja() {
         this.peliraha = 100;
         this.korttienmaara = 0;
         this.pelikasi = new Pelikortti[10];
-    }
-    
-    /**
-     * Konstruktori (kuormittava), kun pelaajalle ei anneta nimeä.
-     */
-    public Pelaaja() {
-        this("Ei nimeä");
     }
 
     /**
