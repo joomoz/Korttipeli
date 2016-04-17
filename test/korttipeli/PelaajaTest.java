@@ -62,7 +62,7 @@ public class PelaajaTest {
     @Test
     public void testLisaaKortti() {
         pleijeri = new Pelaaja();
-        kortti = new Pelikortti(Maa.values()[1], 10);
+        kortti = new Pelikortti(Maa.values()[1], 10, null);
         int maaraEnnen = pleijeri.korttienMaara();
         boolean arvo = pleijeri.lisaaKortti(kortti);
         assertEquals(maaraEnnen + 1, pleijeri.korttienMaara());
@@ -74,7 +74,7 @@ public class PelaajaTest {
     @Test
     public void testGetSumma() {
         pleijeri = new Pelaaja();
-        kortti = new Pelikortti(Maa.values()[1], 10);
+        kortti = new Pelikortti(Maa.values()[1], 10, null);
         boolean arvo = pleijeri.lisaaKortti(kortti);
         assertEquals(pleijeri.getSumma(), 10);
     }
@@ -86,8 +86,8 @@ public class PelaajaTest {
     public void testTulostaKasiFalse() {
         boolean naytaEkaKortti = false;
         pleijeri = new Pelaaja();
-        Pelikortti kortti1 = new Pelikortti(Maa.values()[1], 2);
-        Pelikortti kortti2 = new Pelikortti(Maa.values()[1], 3);
+        Pelikortti kortti1 = new Pelikortti(Maa.values()[1], 2, null);
+        Pelikortti kortti2 = new Pelikortti(Maa.values()[1], 3, null);
         pleijeri.lisaaKortti(kortti1);
         pleijeri.lisaaKortti(kortti2);
         pleijeri.tulostaKasi(naytaEkaKortti);
@@ -101,8 +101,8 @@ public class PelaajaTest {
     public void testTulostaKasiTrue() {
         boolean naytaEkaKortti = true;
         pleijeri = new Pelaaja();
-        Pelikortti kortti1 = new Pelikortti(Maa.values()[1], 2);
-        Pelikortti kortti2 = new Pelikortti(Maa.values()[1], 3);
+        Pelikortti kortti1 = new Pelikortti(Maa.values()[1], 2, null);
+        Pelikortti kortti2 = new Pelikortti(Maa.values()[1], 3, null);
         pleijeri.lisaaKortti(kortti1);
         pleijeri.lisaaKortti(kortti2);
         pleijeri.tulostaKasi(naytaEkaKortti);
@@ -148,9 +148,9 @@ public class PelaajaTest {
     @Test
     public void korttienMaaraLisakortinJalkeen() {
         pleijeri = new Pelaaja();
-        Pelikortti kortti1 = new Pelikortti(Maa.values()[1], 2);
-        Pelikortti kortti2 = new Pelikortti(Maa.values()[2], 3);
-        Pelikortti kortti3 = new Pelikortti(Maa.values()[3], 5);
+        Pelikortti kortti1 = new Pelikortti(Maa.values()[1], 2, null);
+        Pelikortti kortti2 = new Pelikortti(Maa.values()[2], 3, null);
+        Pelikortti kortti3 = new Pelikortti(Maa.values()[3], 5, null);
         pleijeri.lisaaKortti(kortti1);
         pleijeri.lisaaKortti(kortti2);
         pleijeri.lisaaKortti(kortti3);

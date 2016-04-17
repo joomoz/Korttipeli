@@ -1,6 +1,12 @@
 package korttipeli;
 
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  * Korttipakka
@@ -20,12 +26,19 @@ public class Korttipakka {
     public Korttipakka() {
         this.korttienmaara = 52;
         this.pakanKortit = new Pelikortti[this.korttienmaara];
-
+        Image kuva = null;
         int kortinPaikka = 0;
         //Luo kaikki kortit
         for (int maa = 0; maa < 4; maa++) {
             for (int numero = 1; numero < 14; numero++) {
-                this.pakanKortit[kortinPaikka] = new Pelikortti(Maa.values()[maa], numero);
+                //Ladataan korteille kuvat
+                try {
+                    kuva = ImageIO.read(new File("cards/" + (maa + 1) + "" + numero + ".png"));
+                } catch (IOException ex) {
+                    System.out.println("Kortin kuva puuttuu!");
+                    System.exit(52);
+                }
+                this.pakanKortit[kortinPaikka] = new Pelikortti(Maa.values()[maa], numero, kuva);
                 kortinPaikka++;
             }
         }
