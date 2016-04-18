@@ -34,30 +34,26 @@ public class Blackjack implements ActionListener, ChangeListener {
      */
     public void uusiPeli() {
         //Luo pelaajat
-        ihminen = new Pelaaja();
-        jakaja = new Pelaaja();
+        ihminen = new Pelaaja("ihminen");
+        jakaja = new Pelaaja("jakaja");
+        panos = 20;
 
-        while (ihminen.getRaha() > 0) {
+        //while (ihminen.getRaha() > 0) {
             kayttoliittyma.asetaTekstinaytto("Set your bet and press deal!");
             kayttoliittyma.asetaRahanaytto("" + ihminen.getRaha());
+            kayttoliittyma.asetaPanosnaytto("" + panos);
 
             //Peli toimii pelaajan valintojen mukaan.
-
             // Tulosta lopulliset kädet
             //ihminen.tulostaKasi(true);
             //System.out.println("Summa: " + ihminen.getSumma());
-
             //jakaja.tulostaKasi(true);
             //System.out.println("Summa: " + jakaja.getSumma());
-        }
+        //}
     }
 
     /**
      * Metodi voiton tarkastamiseen.
-     *
-     * @param ihminen pelaaja
-     * @param jakaja jakaja
-     * @param panos kierroksen panos
      */
     private void tarkastaVoittaja() {
         int ihmisenSumma = ihminen.getSumma();
@@ -150,6 +146,7 @@ public class Blackjack implements ActionListener, ChangeListener {
     /**
      * Tarkastaa onko pelaajalla vähintään panoksen verran rahaa. Alle 10 rahan
      * tilanteessa kaikki menee peliin automaattisesti.
+     *
      * @param panos
      * @return oliko tarpeeksi rahaa panokseen nähden
      */
@@ -170,25 +167,29 @@ public class Blackjack implements ActionListener, ChangeListener {
         ihminen.tyhjennaKasi();
         jakaja.tyhjennaKasi();
 
+        Pelikortti[] alunKortit = new Pelikortti[4];
         //Aluksi molemmille jaetaan kaksi korttia.
-        ihminen.lisaaKortti(korttipakka.otaKortti());
-        jakaja.lisaaKortti(korttipakka.otaKortti());
-        ihminen.lisaaKortti(korttipakka.otaKortti());
-        jakaja.lisaaKortti(korttipakka.otaKortti());
-        //Näytetään kortit käyttöliittymässä
-        //TODO
-        //ihminen.tulostaKasi(true);
-        //jakaja.tulostaKasi(false);
+        for (int k = 0; k < 4; k++) {
+            alunKortit[k] = korttipakka.otaKortti();
+            if (k % 2 == 0) {
+                ihminen.lisaaKortti(alunKortit[k]);
+                kayttoliittyma.piirraKortti(alunKortit[k], ihminen);
+            } else {
+                jakaja.lisaaKortti(alunKortit[k]);
+                kayttoliittyma.piirraKortti(alunKortit[k], jakaja);
+            }          
+        }
+        kayttoliittyma.asetaTekstinaytto("HIT OR STAND!");
     }
 
     private void otaLisaa() {
-        kayttoliittyma.asetaTekstinaytto("HIT OR STAND!");
-        boolean menikoYli = !ihminen.lisaaKortti(korttipakka.otaKortti());
-        //Näytä uusi kortti käyttöliittymässä
-        //TODO
-        if (menikoYli) {
+        Pelikortti kortti = korttipakka.otaKortti();
+        boolean menikoYli = ihminen.lisaaKortti(kortti);
+        kayttoliittyma.piirraKortti(kortti, ihminen);
+        if (!menikoYli) {
             tarkastaVoittaja();
         }
+        kayttoliittyma.asetaTekstinaytto("HIT OR STAND!");
     }
 
     /**
@@ -197,10 +198,10 @@ public class Blackjack implements ActionListener, ChangeListener {
     private void jakajaOttaaKortit() {
         boolean menikoYli;
         while (jakaja.getSumma() < 17) {
-            menikoYli = !jakaja.lisaaKortti(korttipakka.otaKortti());
-            jakaja.tulostaKasi(true);
+            Pelikortti kortti = korttipakka.otaKortti();
+            menikoYli = jakaja.lisaaKortti(kortti);
+            kayttoliittyma.piirraKortti(kortti, jakaja);
         }
-        //System.out.println("Jakaja jää tähän.\n");
     }
 
 }

@@ -2,7 +2,10 @@ package korttipeli;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 /**
  * GUI - Graafinen käyttöliittymä korttipelille.
@@ -16,8 +19,8 @@ public class Kayttoliittyma extends JFrame implements Runnable {
     private javax.swing.JButton hitNappi;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLayeredPane jLayeredPane1;
-    private javax.swing.JLayeredPane jLayeredPane2;
+    private javax.swing.JLayeredPane jakajanKortit;
+    private javax.swing.JLayeredPane pelaajanKortit;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -38,9 +41,9 @@ public class Kayttoliittyma extends JFrame implements Runnable {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLayeredPane1 = new javax.swing.JLayeredPane();
+        jakajanKortit = new javax.swing.JLayeredPane();
         jPanel3 = new javax.swing.JPanel();
-        jLayeredPane2 = new javax.swing.JLayeredPane();
+        pelaajanKortit = new javax.swing.JLayeredPane();
         hitNappi = new javax.swing.JButton();
         standNappi = new javax.swing.JButton();
         panoksenSaadin = new javax.swing.JSlider();
@@ -59,10 +62,10 @@ public class Kayttoliittyma extends JFrame implements Runnable {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dealer", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, fontti));
 
-        jLayeredPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jakajanKortit.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
-        jLayeredPane1.setLayout(jLayeredPane1Layout);
+        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jakajanKortit);
+        jakajanKortit.setLayout(jLayeredPane1Layout);
         jLayeredPane1Layout.setHorizontalGroup(
                 jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -78,22 +81,22 @@ public class Kayttoliittyma extends JFrame implements Runnable {
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLayeredPane1)
+                        .addComponent(jakajanKortit)
                         .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jakajanKortit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 33, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Player", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, fontti));
 
-        jLayeredPane2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        pelaajanKortit.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
-        jLayeredPane2.setLayout(jLayeredPane2Layout);
+        javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(pelaajanKortit);
+        pelaajanKortit.setLayout(jLayeredPane2Layout);
         jLayeredPane2Layout.setHorizontalGroup(
                 jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -109,21 +112,34 @@ public class Kayttoliittyma extends JFrame implements Runnable {
                 jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLayeredPane2)
+                        .addComponent(pelaajanKortit)
                         .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
                 jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pelaajanKortit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 36, Short.MAX_VALUE))
         );
 
         hitNappi.setFont(fontti);
         hitNappi.setText("HIT");
+        hitNappi.setActionCommand("HIT");
+        hitNappi.addActionListener(kuuntelija);
 
         standNappi.setFont(fontti);
         standNappi.setText("STAND");
+        standNappi.setActionCommand("STAND");
+        standNappi.addActionListener(kuuntelija);
+
+        dealNappi.setFont(fontti);
+        dealNappi.setText("DEAL");
+        dealNappi.setActionCommand("DEAL");
+        dealNappi.addActionListener(kuuntelija);
+
+        exitNappi.setFont(fontti);
+        exitNappi.setText("EXIT");
+        exitNappi.addActionListener(kuuntelija);
 
         panoksenSaadin.setFont(fontti);
         panoksenSaadin.setMajorTickSpacing(10);
@@ -137,12 +153,9 @@ public class Kayttoliittyma extends JFrame implements Runnable {
         panoksenSaadin.setAutoscrolls(true);
         panoksenSaadin.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Bet", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, fontti));
 
-        dealNappi.setFont(fontti);
-        dealNappi.setText("DEAL");
-
         tekstinaytto.setFont(fontti);
         tekstinaytto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tekstinaytto.setText("BlackJACK");
+        tekstinaytto.setText("Blackjack");
         tekstinaytto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel1.setFont(fontti);
@@ -224,12 +237,6 @@ public class Kayttoliittyma extends JFrame implements Runnable {
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[]{dealNappi, hitNappi, standNappi});
 
-        dealNappi.addActionListener(kuuntelija);
-
-        exitNappi.setFont(fontti);
-        exitNappi.setText("EXIT");
-        exitNappi.addActionListener(kuuntelija);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -264,6 +271,37 @@ public class Kayttoliittyma extends JFrame implements Runnable {
 
     public void asetaPanosnaytto(String text) {
         panosnaytto.setText(text);
+    }
+
+    /**
+     * Piirtaa kortin käyttöliittymään.
+     *
+     * @param kortti
+     * @param kenelle
+     * @param pelaaja
+     */
+    public void piirraKortti(Pelikortti kortti, Pelaaja pelaaja) {
+        ImageIcon kuva;
+        JLabel cardLabel;
+        switch (pelaaja.getNimi()) {
+            case "jakaja":
+                if (pelaaja.korttienMaara() != 1) {
+                    kuva = new ImageIcon(kortti.getKuva());
+                } else {
+                    kuva = new ImageIcon("cards/back.png");
+                }
+                cardLabel = new JLabel(kuva);
+                cardLabel.setBounds(180 + 40 * pelaaja.korttienMaara(), 4, kuva.getIconWidth(), kuva.getIconHeight());
+                jakajanKortit.add(cardLabel, new Integer(pelaaja.korttienMaara()));
+                break;
+            case "ihminen":
+                kuva = new ImageIcon(kortti.getKuva());
+                cardLabel = new JLabel(kuva);
+                cardLabel.setBounds(180 + 40 * pelaaja.korttienMaara(), 4, kuva.getIconWidth(), kuva.getIconHeight());
+                pelaajanKortit.add(cardLabel, new Integer(pelaaja.korttienMaara()));
+                break;
+            default:
+        }
     }
 
     @Override

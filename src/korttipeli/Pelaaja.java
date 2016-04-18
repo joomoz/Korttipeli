@@ -7,6 +7,7 @@ package korttipeli;
  */
 public class Pelaaja {
 
+    private String nimi;
     private double peliraha;
     private Pelikortti[] pelikasi = new Pelikortti[10];
     private int korttienmaara;
@@ -14,7 +15,8 @@ public class Pelaaja {
     /**
      * Konstruktori Pelaajalle.
      */
-    public Pelaaja() {
+    public Pelaaja(String pelaaja) {
+        this.nimi = pelaaja;
         this.peliraha = 100;
         this.korttienmaara = 0;
         this.pelikasi = new Pelikortti[10];
@@ -40,7 +42,7 @@ public class Pelaaja {
     public boolean lisaaKortti(Pelikortti kortti) {
         this.pelikasi[this.korttienmaara] = kortti;
         this.korttienmaara++;
-        return (this.getSumma() > 21);
+        return (this.getSumma() <= 21);
     }
 
     /**
@@ -89,6 +91,15 @@ public class Pelaaja {
         }
     }
 
+    /**
+     * Metodi palauttaa pelaajan rahamäärän.
+     *
+     * @return peliraha
+     */
+    public String getNimi() {
+        return this.nimi;
+    }
+    
     /**
      * Metodi palauttaa pelaajan rahamäärän.
      *
