@@ -22,7 +22,6 @@ public class Blackjack implements ActionListener, ChangeListener {
 
     public Blackjack() {
         kayttoliittyma = new Kayttoliittyma(this);
-        korttipakka = new Korttipakka();
         SwingUtilities.invokeLater(kayttoliittyma);
         kayttoliittyma.panoksenSaadin.addChangeListener(this);
         uusiPeli();
@@ -33,23 +32,14 @@ public class Blackjack implements ActionListener, ChangeListener {
      * loppuvat.
      */
     public void uusiPeli() {
-        //Luo pelaajat
+        korttipakka = new Korttipakka();
         ihminen = new Pelaaja("ihminen");
         jakaja = new Pelaaja("jakaja");
         panos = 20;
 
-        //while (ihminen.getRaha() > 0) {
-            kayttoliittyma.asetaTekstinaytto("Set your bet and press deal!");
-            kayttoliittyma.asetaRahanaytto("" + ihminen.getRaha());
-            kayttoliittyma.asetaPanosnaytto("" + panos);
-
-            //Peli toimii pelaajan valintojen mukaan.
-            // Tulosta lopulliset kädet
-            //ihminen.tulostaKasi(true);
-            //System.out.println("Summa: " + ihminen.getSumma());
-            //jakaja.tulostaKasi(true);
-            //System.out.println("Summa: " + jakaja.getSumma());
-        //}
+        kayttoliittyma.asetaTekstinaytto("Aseta panos ja paina jakoa!");
+        kayttoliittyma.asetaRahanaytto("" + ihminen.getRaha());
+        kayttoliittyma.asetaPanosnaytto("" + panos);
     }
 
     /**
@@ -62,54 +52,64 @@ public class Blackjack implements ActionListener, ChangeListener {
         int jakajanKorttienLkm = jakaja.korttienMaara();
 
         if (ihmisenSumma > 21) {
-            kayttoliittyma.asetaTekstinaytto("Jakaja voitti!");
-            ihminen.setRaha(-1.0 * panos);
+            kayttoliittyma.asetaTekstinaytto("Jakaja voitti! Aseta panos ja paina jakoa.");
         } else if (ihmisenSumma == 21 && ihmisenKorttienLkm == 2 && jakajanSumma != 21) {
-            kayttoliittyma.asetaTekstinaytto("Pelaaja voitti " + 1.5 * panos + " euroa!");
+            kayttoliittyma.asetaTekstinaytto("Pelaaja voitti " + 1.5 * panos + " euroa! Aseta panos ja paina jakoa.");
             ihminen.setRaha(1.5 * panos);
             //Pelaajalla ja jakajalla on molemmilla blackjack, joten pelaaja saa panoksen takaisin
         } else if (ihmisenSumma == 21 && ihmisenKorttienLkm == 2 && jakajanSumma == 21 && jakajanKorttienLkm == 2) {
-            kayttoliittyma.asetaTekstinaytto("Tasapeli, pelaaja saa panoksen takaisin.");
+            kayttoliittyma.asetaTekstinaytto("Tasapeli, pelaaja saa rahat takaisin. Aseta panos ja paina jakoa.");
             //ei siis muuteta pelaajan rahasummaa
             //Pelaaja voittaa normaalisti
         } else if (ihmisenSumma > jakajanSumma && ihmisenSumma <= 21 || jakajanSumma > 21 && ihmisenSumma <= 21) {
-            kayttoliittyma.asetaTekstinaytto("Pelaaja voitti!");
-            ihminen.setRaha(1.0 * panos);
+            kayttoliittyma.asetaTekstinaytto("Pelaaja voitti " + 1.5 * panos + " euroa! Aseta panos ja paina jakoa.");
+            ihminen.setRaha(1.5 * panos);
             //Muulloin jakaja voittaa
         } else {
-            kayttoliittyma.asetaTekstinaytto("Jakaja voitti!");
-            ihminen.setRaha(-1.0 * panos);
+            kayttoliittyma.asetaTekstinaytto("Jakaja voitti! Aseta panos ja paina jakoa.");
+        }
+        
+        kayttoliittyma.asetaRahanaytto("" + ihminen.getRaha());
+        kayttoliittyma.asetaNappuloidenTila("JÄÄ");
+        
+        //Jos rahaa jää alle 10 euroa, lukitaan panossäädin ja laitetaan loput rahat peliin.
+        if (ihminen.getRaha() < 10) {
+            rahatLopussa(); 
         }
     }
 
     /**
      * Toimii sen mukaan mitä nappia käyttöliittymässä painetaan.
+     *
+     * @param e
      */
     @Override
     public void actionPerformed(ActionEvent e) {
         String toiminto = e.getActionCommand();
         switch (toiminto) {
-            case "DEAL":
+            case "JAKO":
                 if (!tarkastaPanos(panos)) {
                     return;
                 }
                 jaaKortit();
                 break;
-            case "HIT":
+            case "LISÄÄ":
                 otaLisaa();
                 break;
-            case "STAND":
+            case "JÄÄ":
+                kayttoliittyma.naytaJakajanEkaKortti(jakaja);
                 jakajaOttaaKortit();
                 break;
             case "EXIT":
                 System.exit(0);
         }
-        //kayttoliittyma.setEnableButton(toiminto);
+        kayttoliittyma.asetaNappuloidenTila(toiminto);
     }
 
     /**
      * Muuttaa panoksen sliderin mukaan. Jos rahaa on alle 10, asetetaan loput
      * rahat peliin.
+     *
      * @param e
      */
     @Override
@@ -118,25 +118,29 @@ public class Blackjack implements ActionListener, ChangeListener {
         if (!source.getValueIsAdjusting()) {
             double luku = (source.getValue());
             if (tarkastaPanos(luku)) {
-                panos = (luku < 10) ? ihminen.getRaha() : luku;
-                kayttoliittyma.asetaPanosnaytto("" + panos);
+                panos = luku;
+            } else if (ihminen.getRaha() < 10) {
+                panos = ihminen.getRaha();
             }
+            kayttoliittyma.asetaPanosnaytto("" + panos);
         }
     }
 
     /**
-     * Tarkastaa onko pelaajalla vähintään panoksen verran rahaa. Alle 10 rahan
-     * tilanteessa kaikki menee peliin automaattisesti.
+     * Tarkastaa onko pelaajalla vähintään panoksen verran rahaa.
      *
      * @param panos panoksen määrä
      * @return oliko tarpeeksi rahaa panokseen nähden
      */
     public boolean tarkastaPanos(double panos) {
         if (panos > ihminen.getRaha() && ihminen.getRaha() >= 10) {
-            kayttoliittyma.asetaTekstinaytto("Place smaller bet.");
+            kayttoliittyma.asetaTekstinaytto("Aseta pienempi panos.");
+            kayttoliittyma.asetaNappuloidenTila("PANOS");
             return false;
+        } else {
+            kayttoliittyma.asetaNappuloidenTila("JÄÄ");
+            return true;
         }
-        return true;
     }
 
     /**
@@ -147,30 +151,36 @@ public class Blackjack implements ActionListener, ChangeListener {
         korttipakka = new Korttipakka();
         ihminen.tyhjennaKasi();
         jakaja.tyhjennaKasi();
+        kayttoliittyma.tyhjenna();
+        ihminen.setRaha(-panos);
+        kayttoliittyma.asetaRahanaytto("" + ihminen.getRaha());
 
-        Pelikortti[] alunKortit = new Pelikortti[4];
+        Pelikortti kortti;
         //Aluksi molemmille jaetaan kaksi korttia.
         for (int k = 0; k < 4; k++) {
-            alunKortit[k] = korttipakka.otaKortti();
+            kortti = korttipakka.otaKortti();
             if (k % 2 == 0) {
-                ihminen.lisaaKortti(alunKortit[k]);
-                kayttoliittyma.piirraKortti(alunKortit[k], ihminen);
+                ihminen.lisaaKortti(kortti);
+                kayttoliittyma.piirraKortti(kortti, ihminen);
             } else {
-                jakaja.lisaaKortti(alunKortit[k]);
-                kayttoliittyma.piirraKortti(alunKortit[k], jakaja);
-            }          
+                jakaja.lisaaKortti(kortti);
+                kayttoliittyma.piirraKortti(kortti, jakaja);
+            }
         }
-        kayttoliittyma.asetaTekstinaytto("HIT OR STAND!");
+        kayttoliittyma.asetaTekstinaytto("Ota lisää tai jää tähän!");
     }
 
     private void otaLisaa() {
         Pelikortti kortti = korttipakka.otaKortti();
-        boolean menikoYli = ihminen.lisaaKortti(kortti);
+        boolean alle21 = ihminen.lisaaKortti(kortti);
         kayttoliittyma.piirraKortti(kortti, ihminen);
-        if (!menikoYli) {
+        if (!alle21) {
+            jakajaOttaaKortit();
             tarkastaVoittaja();
+            kayttoliittyma.asetaNappuloidenTila("JÄÄ");
+        } else {
+            kayttoliittyma.asetaTekstinaytto("Ota lisää tai jää tähän!");
         }
-        kayttoliittyma.asetaTekstinaytto("HIT OR STAND!");
     }
 
     /**
@@ -183,11 +193,26 @@ public class Blackjack implements ActionListener, ChangeListener {
             menikoYli = jakaja.lisaaKortti(kortti);
             kayttoliittyma.piirraKortti(kortti, jakaja);
         }
+        tarkastaVoittaja();
+    }
+
+    /**
+     * Hoitaa pelin lopun kun rahaa on alle 10 euroa.
+     */
+    private void rahatLopussa() {
+        kayttoliittyma.asetaNappuloidenTila("VAINJAKO");
+        panos = ihminen.getRaha();
+        kayttoliittyma.asetaPanosnaytto("" + panos);
+        if(ihminen.getRaha()==0) {
+            kayttoliittyma.asetaNappuloidenTila("LOPPU");
+            kayttoliittyma.asetaTekstinaytto("Rahasi loppuivat ja sinut heitettiin ulos pöydästä!");
+        }
     }
     
     /**
      * Luo pelin
-     * @param args 
+     *
+     * @param args
      */
     public static void main(String[] args) {
         Blackjack peli = new Blackjack();

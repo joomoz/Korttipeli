@@ -2,7 +2,6 @@ package korttipeli;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -14,9 +13,10 @@ import javax.swing.JLabel;
  */
 public class Kayttoliittyma extends JFrame implements Runnable {
 
-    private javax.swing.JButton dealNappi;
+    private javax.swing.JButton jakoNappi;
     private javax.swing.JButton exitNappi;
-    private javax.swing.JButton hitNappi;
+    private javax.swing.JButton lisaaNappi;
+    private javax.swing.JButton jaaNappi;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLayeredPane jakajanKortit;
@@ -27,7 +27,6 @@ public class Kayttoliittyma extends JFrame implements Runnable {
     public javax.swing.JSlider panoksenSaadin;
     private javax.swing.JLabel panosnaytto;
     private javax.swing.JLabel rahanaytto;
-    private javax.swing.JButton standNappi;
     private javax.swing.JLabel tekstinaytto;
 
     /**
@@ -44,10 +43,10 @@ public class Kayttoliittyma extends JFrame implements Runnable {
         jakajanKortit = new javax.swing.JLayeredPane();
         jPanel3 = new javax.swing.JPanel();
         pelaajanKortit = new javax.swing.JLayeredPane();
-        hitNappi = new javax.swing.JButton();
-        standNappi = new javax.swing.JButton();
+        lisaaNappi = new javax.swing.JButton();
+        jaaNappi = new javax.swing.JButton();
         panoksenSaadin = new javax.swing.JSlider();
-        dealNappi = new javax.swing.JButton();
+        jakoNappi = new javax.swing.JButton();
         tekstinaytto = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         rahanaytto = new javax.swing.JLabel();
@@ -60,7 +59,7 @@ public class Kayttoliittyma extends JFrame implements Runnable {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dealer", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, fontti));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Jakaja", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, fontti));
 
         jakajanKortit.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -91,7 +90,7 @@ public class Kayttoliittyma extends JFrame implements Runnable {
                         .addGap(0, 33, Short.MAX_VALUE))
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Player", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, fontti));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pelaaja", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, fontti));
 
         pelaajanKortit.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -122,20 +121,20 @@ public class Kayttoliittyma extends JFrame implements Runnable {
                         .addGap(0, 36, Short.MAX_VALUE))
         );
 
-        hitNappi.setFont(fontti);
-        hitNappi.setText("HIT");
-        hitNappi.setActionCommand("HIT");
-        hitNappi.addActionListener(kuuntelija);
+        lisaaNappi.setFont(fontti);
+        lisaaNappi.setText("LISÄÄ");
+        lisaaNappi.setActionCommand("LISÄÄ");
+        lisaaNappi.addActionListener(kuuntelija);
 
-        standNappi.setFont(fontti);
-        standNappi.setText("STAND");
-        standNappi.setActionCommand("STAND");
-        standNappi.addActionListener(kuuntelija);
+        jaaNappi.setFont(fontti);
+        jaaNappi.setText("JÄÄ");
+        jaaNappi.setActionCommand("JÄÄ");
+        jaaNappi.addActionListener(kuuntelija);
 
-        dealNappi.setFont(fontti);
-        dealNappi.setText("DEAL");
-        dealNappi.setActionCommand("DEAL");
-        dealNappi.addActionListener(kuuntelija);
+        jakoNappi.setFont(fontti);
+        jakoNappi.setText("JAKO");
+        jakoNappi.setActionCommand("JAKO");
+        jakoNappi.addActionListener(kuuntelija);
 
         exitNappi.setFont(fontti);
         exitNappi.setText("EXIT");
@@ -148,10 +147,8 @@ public class Kayttoliittyma extends JFrame implements Runnable {
         panoksenSaadin.setPaintLabels(true);
         panoksenSaadin.setPaintTicks(true);
         panoksenSaadin.setSnapToTicks(true);
-        panoksenSaadin.setToolTipText("Place your bet!");
         panoksenSaadin.setValue(20);
-        panoksenSaadin.setAutoscrolls(true);
-        panoksenSaadin.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Bet", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, fontti));
+        panoksenSaadin.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Panos", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, fontti));
 
         tekstinaytto.setFont(fontti);
         tekstinaytto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -159,13 +156,13 @@ public class Kayttoliittyma extends JFrame implements Runnable {
         tekstinaytto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel1.setFont(fontti);
-        jLabel1.setText("Money:");
+        jLabel1.setText("Rahaa:");
 
         rahanaytto.setFont(fontti);
         rahanaytto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
         jLabel2.setFont(fontti);
-        jLabel2.setText("BET:");
+        jLabel2.setText("Panos:");
 
         panosnaytto.setFont(fontti);
         panosnaytto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -183,11 +180,11 @@ public class Kayttoliittyma extends JFrame implements Runnable {
                                                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                         .addGap(0, 10, Short.MAX_VALUE)
-                                        .addComponent(dealNappi, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jakoNappi, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(hitNappi, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lisaaNappi, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(standNappi, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(jaaNappi, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -208,7 +205,7 @@ public class Kayttoliittyma extends JFrame implements Runnable {
                         .addContainerGap())
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[]{dealNappi, hitNappi, standNappi});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[]{jakoNappi, lisaaNappi, jaaNappi});
 
         jPanel1Layout.setVerticalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,15 +224,15 @@ public class Kayttoliittyma extends JFrame implements Runnable {
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(dealNappi)
-                                .addComponent(hitNappi)
-                                .addComponent(standNappi))
+                                .addComponent(jakoNappi)
+                                .addComponent(lisaaNappi)
+                                .addComponent(jaaNappi))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(panoksenSaadin, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[]{dealNappi, hitNappi, standNappi});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[]{jakoNappi, lisaaNappi, jaaNappi});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -274,7 +271,8 @@ public class Kayttoliittyma extends JFrame implements Runnable {
     }
 
     /**
-     * Piirtaa kortin käyttöliittymään.
+     * Piirtää kortin käyttöliittymään.
+     *
      * @param kortti Piirrettävä kortti
      * @param pelaaja ihminen/jakaja
      */
@@ -283,10 +281,10 @@ public class Kayttoliittyma extends JFrame implements Runnable {
         JLabel cardLabel;
         switch (pelaaja.getNimi()) {
             case "jakaja":
-                if (pelaaja.korttienMaara() != 1) {
-                    kuva = new ImageIcon(kortti.getKuva());
-                } else {
+                if (pelaaja.korttienMaara() < 2) {
                     kuva = new ImageIcon("cards/back.png");
+                } else {
+                    kuva = new ImageIcon(kortti.getKuva());
                 }
                 cardLabel = new JLabel(kuva);
                 cardLabel.setBounds(180 + 40 * pelaaja.korttienMaara(), 4, kuva.getIconWidth(), kuva.getIconHeight());
@@ -300,6 +298,70 @@ public class Kayttoliittyma extends JFrame implements Runnable {
                 break;
             default:
         }
+    }
+
+    /**
+     * Piirtää jakajan kortit uudestaan, jotta ensimmäinenkin kortti voidaan
+     * näyttää.
+     *
+     * @param pelaaja
+     */
+    public void naytaJakajanEkaKortti(Pelaaja pelaaja) {
+        jakajanKortit.removeAll();
+        for (int k = 0; k < 2; k++) {
+            ImageIcon kuva = new ImageIcon(pelaaja.getKortti(k).getKuva());
+            JLabel cardLabel = new JLabel(kuva);
+            cardLabel.setBounds(180 + 40 * (k + 1), 4, kuva.getIconWidth(), kuva.getIconHeight());
+            jakajanKortit.add(cardLabel, new Integer(k + 1));
+        }
+    }
+
+    public void asetaNappuloidenTila(String toiminto) {
+        switch (toiminto) {
+            case "JAKO":
+                this.jakoNappi.setEnabled(false);
+                this.lisaaNappi.setEnabled(true);
+                this.jaaNappi.setEnabled(true);
+                this.panoksenSaadin.setEnabled(false);
+                break;
+            case "LISÄÄ":
+                break;
+            case "JÄÄ":
+                this.jakoNappi.setEnabled(true);
+                this.lisaaNappi.setEnabled(false);
+                this.jaaNappi.setEnabled(false);
+                this.panoksenSaadin.setEnabled(true);
+                break;
+            case "PANOS":
+                this.jakoNappi.setEnabled(false);
+                this.lisaaNappi.setEnabled(false);
+                this.jaaNappi.setEnabled(false);
+                this.panoksenSaadin.setEnabled(true);
+                break;
+            case "VAINJAKO":
+                this.jakoNappi.setEnabled(false);
+                this.lisaaNappi.setEnabled(false);
+                this.jaaNappi.setEnabled(false);
+                this.panoksenSaadin.setEnabled(false);
+                break;
+            case "LOPPU":
+                this.jakoNappi.setEnabled(false);
+                this.lisaaNappi.setEnabled(false);
+                this.jaaNappi.setEnabled(false);
+                this.panoksenSaadin.setEnabled(false);
+                break;
+            case "EXIT":
+                break;
+        }
+    }
+
+    /**
+     * Tyhjentää kortit näytöltä.
+     */
+    public void tyhjenna() {
+        jakajanKortit.removeAll();
+        pelaajanKortit.removeAll();
+        this.repaint();
     }
 
     @Override

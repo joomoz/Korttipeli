@@ -18,7 +18,7 @@ public class Pelaaja {
      */
     public Pelaaja(String pelaaja) {
         this.nimi = pelaaja;
-        this.peliraha = 100;
+        this.peliraha = 15;
         this.korttienmaara = 0;
         this.pelikasi = new Pelikortti[10];
     }
@@ -90,6 +90,10 @@ public class Pelaaja {
                 System.out.println(this.pelikasi[i]);
             }
         }
+    }
+    
+    public Pelikortti getKortti(int monesko) {
+        return this.pelikasi[monesko];
     }
 
     /**
