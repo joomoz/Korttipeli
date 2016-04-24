@@ -275,10 +275,8 @@ public class Kayttoliittyma extends JFrame implements Runnable {
 
     /**
      * Piirtaa kortin käyttöliittymään.
-     *
-     * @param kortti
-     * @param kenelle
-     * @param pelaaja
+     * @param kortti Piirrettävä kortti
+     * @param pelaaja ihminen/jakaja
      */
     public void piirraKortti(Pelikortti kortti, Pelaaja pelaaja) {
         ImageIcon kuva;

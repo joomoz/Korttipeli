@@ -46,7 +46,7 @@ public class Pelikortti {
     
     /**
      * Metodi palauttaa kortin kuvan.
-     * @return 
+     * @return palautettava kuva
      */
     public Image getKuva() {
         return this.kuva;

@@ -84,8 +84,6 @@ public class Blackjack implements ActionListener, ChangeListener {
 
     /**
      * Toimii sen mukaan mitä nappia käyttöliittymässä painetaan.
-     *
-     * @param e
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -110,8 +108,8 @@ public class Blackjack implements ActionListener, ChangeListener {
     }
 
     /**
-     * Panoksen muuttaminen sliderilla.
-     *
+     * Muuttaa panoksen sliderin mukaan. Jos rahaa on alle 10, asetetaan loput
+     * rahat peliin.
      * @param e
      */
     @Override
@@ -127,27 +125,10 @@ public class Blackjack implements ActionListener, ChangeListener {
     }
 
     /**
-     * Muuttaa panoksen sliderin mukaan. Jos rahaa on alle 10, asetetaan loput
-     * rahat peliin.
-     *
-     * @param e
-     */
-    public void muutaPanos(ChangeEvent e) {
-        JSlider source = (JSlider) e.getSource();
-        if (!source.getValueIsAdjusting()) {
-            double luku = (source.getValue());
-            if (tarkastaPanos(luku)) {
-                panos = (luku < 10) ? ihminen.getRaha() : luku;
-                kayttoliittyma.asetaPanosnaytto("" + panos);
-            }
-        }
-    }
-
-    /**
      * Tarkastaa onko pelaajalla vähintään panoksen verran rahaa. Alle 10 rahan
      * tilanteessa kaikki menee peliin automaattisesti.
      *
-     * @param panos
+     * @param panos panoksen määrä
      * @return oliko tarpeeksi rahaa panokseen nähden
      */
     public boolean tarkastaPanos(double panos) {
@@ -202,6 +183,14 @@ public class Blackjack implements ActionListener, ChangeListener {
             menikoYli = jakaja.lisaaKortti(kortti);
             kayttoliittyma.piirraKortti(kortti, jakaja);
         }
+    }
+    
+    /**
+     * Luo pelin
+     * @param args 
+     */
+    public static void main(String[] args) {
+        Blackjack peli = new Blackjack();
     }
 
 }

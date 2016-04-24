@@ -14,6 +14,7 @@ public class Pelaaja {
 
     /**
      * Konstruktori Pelaajalle.
+     * @param pelaaja :n nimi
      */
     public Pelaaja(String pelaaja) {
         this.nimi = pelaaja;
