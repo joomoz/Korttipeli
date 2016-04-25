@@ -123,21 +123,21 @@ public class Kayttoliittyma extends JFrame implements Runnable {
 
         lisaaNappi.setFont(fontti);
         lisaaNappi.setText("LISÄÄ");
-        lisaaNappi.setActionCommand("LISÄÄ");
+        lisaaNappi.setActionCommand("lisää");
         lisaaNappi.addActionListener(kuuntelija);
 
         jaaNappi.setFont(fontti);
         jaaNappi.setText("JÄÄ");
-        jaaNappi.setActionCommand("JÄÄ");
+        jaaNappi.setActionCommand("jää");
         jaaNappi.addActionListener(kuuntelija);
 
         jakoNappi.setFont(fontti);
         jakoNappi.setText("JAKO");
-        jakoNappi.setActionCommand("JAKO");
+        jakoNappi.setActionCommand("jako");
         jakoNappi.addActionListener(kuuntelija);
 
         exitNappi.setFont(fontti);
-        exitNappi.setText("EXIT");
+        exitNappi.setText("exit");
         exitNappi.addActionListener(kuuntelija);
 
         panoksenSaadin.setFont(fontti);
@@ -318,39 +318,39 @@ public class Kayttoliittyma extends JFrame implements Runnable {
 
     public void asetaNappuloidenTila(String toiminto) {
         switch (toiminto) {
-            case "JAKO":
+            case "jako":
                 this.jakoNappi.setEnabled(false);
                 this.lisaaNappi.setEnabled(true);
                 this.jaaNappi.setEnabled(true);
                 this.panoksenSaadin.setEnabled(false);
                 break;
-            case "LISÄÄ":
+            case "lisää":
                 break;
-            case "JÄÄ":
+            case "jää":
                 this.jakoNappi.setEnabled(true);
                 this.lisaaNappi.setEnabled(false);
                 this.jaaNappi.setEnabled(false);
                 this.panoksenSaadin.setEnabled(true);
                 break;
-            case "PANOS":
+            case "panos":
                 this.jakoNappi.setEnabled(false);
                 this.lisaaNappi.setEnabled(false);
                 this.jaaNappi.setEnabled(false);
                 this.panoksenSaadin.setEnabled(true);
                 break;
-            case "VAINJAKO":
+            case "vainjako":
+                this.jakoNappi.setEnabled(true);
+                this.lisaaNappi.setEnabled(false);
+                this.jaaNappi.setEnabled(false);
+                this.panoksenSaadin.setEnabled(false);
+                break;
+            case "loppu":
                 this.jakoNappi.setEnabled(false);
                 this.lisaaNappi.setEnabled(false);
                 this.jaaNappi.setEnabled(false);
                 this.panoksenSaadin.setEnabled(false);
                 break;
-            case "LOPPU":
-                this.jakoNappi.setEnabled(false);
-                this.lisaaNappi.setEnabled(false);
-                this.jaaNappi.setEnabled(false);
-                this.panoksenSaadin.setEnabled(false);
-                break;
-            case "EXIT":
+            case "exit":
                 break;
         }
     }
