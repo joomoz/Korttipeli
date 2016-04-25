@@ -1,150 +1,227 @@
 package korttipeli;
 
-import java.util.Scanner;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JSlider;
+import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * Blackjack
- * 
+ *
  * @author Joonas Moilanen, 2016
  */
+public class Blackjack implements ActionListener, ChangeListener {
 
-public class Blackjack {
+    private Kayttoliittyma kayttoliittyma;
+    private Korttipakka korttipakka;
+    private Pelaaja ihminen;
+    private Pelaaja jakaja;
+    private double panos;
 
-    public static void main(String[] args) {
-        Scanner lukija = new Scanner(System.in);
-        System.out.println("Tervetuloa pelaamaan Blackjackia!");
-        //Luodaan uusi sekoitettu korttipakka
-        Korttipakka korttipakka;
-        int panos = 1;
+    public Blackjack() {
+        kayttoliittyma = new Kayttoliittyma(this);
+        SwingUtilities.invokeLater(kayttoliittyma);
+        kayttoliittyma.panoksenSaadin.addChangeListener(this);
+        uusiPeli();
+    }
 
-        //Luo pelaaja
-        Pelaaja ihminen = new Pelaaja("Joonas");
-        Pelaaja jakaja = new Pelaaja("Jakaja");
+    /**
+     * Metodi aloittaa uuden pelikierroksen. Peli loppuu kun pelaajan rahat
+     * loppuvat.
+     */
+    public void uusiPeli() {
+        korttipakka = new Korttipakka();
+        ihminen = new Pelaaja("ihminen");
+        jakaja = new Pelaaja("jakaja");
+        panos = 20;
 
-        /**
-         * Tästä alkaa itse peli.
-         * Peli loppuu kun pelaajan rahat loppuvat.
-         */
-        while (ihminen.getRaha() > 0) {
-            System.out.println("** Uusi pelikierros **");
-            //Kerrotaan pelaajan rahatilanne
-            System.out.println("Pelaajalla on " + ihminen.getRaha() + " euroa.");
-
-            /**
-             * Panoksen asetus.
-             */
-            System.out.println("Kerro panoksesi (int): ");
-            while (true) {
-                panos = Integer.parseInt(lukija.nextLine());
-                if (panos > ihminen.getRaha() || panos < 1) {
-                    System.out.println("Panos on alle 1 tai sinulla ei ole tarpeeksi rahaa! Aseta uusi panos.");
-                } else {
-                    break;
-                }
-            }
-            /**
-             * Joka kerta pakka alustetaan, koska ei haluta pelata vajaalla
-             * pakalla ja molempien pelaajien edellisen kierroksen kortit
-             * kerätään pois.
-             */
-            korttipakka = new Korttipakka();
-            ihminen.tyhjennaKasi();
-            jakaja.tyhjennaKasi();
-
-            /**
-             * Aluksi molemmille jaetaan kaksi korttia.
-             */
-            ihminen.lisaaKortti(korttipakka.otaKortti());
-            jakaja.lisaaKortti(korttipakka.otaKortti());
-            ihminen.lisaaKortti(korttipakka.otaKortti());
-            jakaja.lisaaKortti(korttipakka.otaKortti());
-            System.out.println("Alkutilanne:");
-            System.out.println("Pelaajan käsi:");
-            ihminen.tulostaKasi(true);
-            System.out.println("Jakajan käsi:");
-            jakaja.tulostaKasi(false);
-
-            boolean ihminenValmis = false;
-            boolean jakajaValmis = false;
-            String vastaus;
-
-            //Lisäkorttien ottaminen
-            while (!ihminenValmis || !jakajaValmis) {
-                //Ihminen ensin
-                while (!ihminenValmis) {
-                    System.out.println("Otatko lisää vai jäätkö tähän? (L/J)");
-                    vastaus = lukija.nextLine();
-                    if (vastaus.equalsIgnoreCase("L")) {
-                        ihminenValmis = !ihminen.lisaaKortti(korttipakka.otaKortti());
-                        ihminen.tulostaKasi(true);
-                    } else { //if (vastaus.equalsIgnoreCase("J"))
-                        System.out.println("Pelaaja valmis!\n");
-                        ihminenValmis = true;
-                    }
-                }
-                //Jakajan vuoro
-                while (!jakajaValmis) {
-                    System.out.println("Jakaja ottaa lisää kunnes summa on vähintään 17.");
-                    while (jakaja.getSumma() < 17) {
-                        System.out.println("Jakaja ottaa lisäkortin.");
-                        jakajaValmis = !jakaja.lisaaKortti(korttipakka.otaKortti());
-                        jakaja.tulostaKasi(true);
-                    }
-                    System.out.println("Jakaja jää tähän.\n");
-                    jakajaValmis = true;
-                }
-
-                // Tulosta lopulliset kädet
-                System.out.println("* * * * * *");
-                System.out.println("Lopulliset kädet:");
-                System.out.println("Pelaaja:");
-                ihminen.tulostaKasi(true);
-                System.out.println("Summa: " + ihminen.getSumma());
-
-                System.out.println("* * * * * *");
-                System.out.println("Jakaja:");
-                jakaja.tulostaKasi(true);
-                System.out.println("Summa: " + jakaja.getSumma());
-
-                voittikoPelaaja(ihminen, jakaja, panos);
-            }
-        }
-
-        System.out.println("Rahasi loppuivat ja sinut heitettiin ulos pöydästä.");
+        kayttoliittyma.asetaNappuloidenTila("jää");
+        kayttoliittyma.asetaTekstinaytto("Aseta panos ja paina jakoa!");
+        kayttoliittyma.asetaRahanaytto("" + ihminen.getRaha());
+        kayttoliittyma.asetaPanosnaytto("" + panos);
     }
 
     /**
      * Metodi voiton tarkastamiseen.
-     * @param ihminen pelaaja
-     * @param jakaja jakaja
-     * @param panos kierroksen panos
      */
-    private static void voittikoPelaaja(Pelaaja ihminen, Pelaaja jakaja, int panos) {
+    private void tarkastaVoittaja() {
         int ihmisenSumma = ihminen.getSumma();
         int jakajanSumma = jakaja.getSumma();
         int ihmisenKorttienLkm = ihminen.korttienMaara();
         int jakajanKorttienLkm = jakaja.korttienMaara();
 
-        //Ihminen voittaa Black Jackilla
         if (ihmisenSumma > 21) {
-            System.out.println("Jakaja voitti!");
-            ihminen.setRaha(-1.0 * panos);
+            kayttoliittyma.asetaTekstinaytto("Jakaja voitti! Aseta panos ja paina jakoa.");
         } else if (ihmisenSumma == 21 && ihmisenKorttienLkm == 2 && jakajanSumma != 21) {
-            System.out.println("Pelaaja voitti " + 1.5 * panos + " euroa!");
+            kayttoliittyma.asetaTekstinaytto("Pelaaja voitti " + 1.5 * panos + " euroa! Aseta panos ja paina jakoa.");
             ihminen.setRaha(1.5 * panos);
             //Pelaajalla ja jakajalla on molemmilla blackjack, joten pelaaja saa panoksen takaisin
         } else if (ihmisenSumma == 21 && ihmisenKorttienLkm == 2 && jakajanSumma == 21 && jakajanKorttienLkm == 2) {
-            System.out.println("Tasapeli, pelaaja saa panoksen takaisin.");
-            // ei siis muuteta pelaajan rahasummaa
+            kayttoliittyma.asetaTekstinaytto("Tasapeli, pelaaja saa rahat takaisin. Aseta panos ja paina jakoa.");
+            //ei siis muuteta pelaajan rahasummaa
             //Pelaaja voittaa normaalisti
         } else if (ihmisenSumma > jakajanSumma && ihmisenSumma <= 21 || jakajanSumma > 21 && ihmisenSumma <= 21) {
-            System.out.println("Pelaaja voitti!");
-            ihminen.setRaha(1.0 * panos);
-            //Jakaja voittaa
+            kayttoliittyma.asetaTekstinaytto("Pelaaja voitti " + 1.5 * panos + " euroa! Aseta panos ja paina jakoa.");
+            ihminen.setRaha(1.5 * panos);
+            //Muulloin jakaja voittaa
         } else {
-            System.out.println("Jakaja voitti!");
-            ihminen.setRaha(-1.0 * panos);
+            kayttoliittyma.asetaTekstinaytto("Jakaja voitti! Aseta panos ja paina jakoa.");
         }
 
+        kayttoliittyma.asetaRahanaytto("" + ihminen.getRaha());
+        kayttoliittyma.asetaNappuloidenTila("jää");
+
+        //Jos rahaa jää alle 10 euroa, lukitaan panossäädin ja laitetaan loput rahat peliin.
+        if (ihminen.getRaha() < 10) {
+            rahatLopussa();
+        }
     }
+
+    /**
+     * Toimii sen mukaan mitä nappia käyttöliittymässä painetaan.
+     *
+     * @param e
+     */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String toiminto = e.getActionCommand();
+        switch (toiminto) {
+            case "jako":
+                if (!tarkastaPanos(panos)) {
+                    return;
+                }
+                jaaKortit();
+                break;
+            case "lisää":
+                otaLisaa();
+                break;
+            case "jää":
+                jakajaOttaaKortit();
+                break;
+            case "exit":
+                System.exit(0);
+        }
+    }
+
+    /**
+     * Muuttaa panoksen sliderin mukaan. Jos rahaa on alle 10, asetetaan loput
+     * rahat peliin.
+     *
+     * @param e
+     */
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        JSlider source = (JSlider) e.getSource();
+        if (!source.getValueIsAdjusting()) {
+            double luku = (source.getValue());
+            if (tarkastaPanos(luku)) {
+                panos = luku;
+            } else if (ihminen.getRaha() < 10) {
+                panos = ihminen.getRaha();
+            }
+            kayttoliittyma.asetaPanosnaytto("" + panos);
+        }
+    }
+
+    /**
+     * Tarkastaa onko pelaajalla vähintään panoksen verran rahaa.
+     *
+     * @param panos panoksen määrä
+     * @return oliko tarpeeksi rahaa panokseen nähden
+     */
+    private boolean tarkastaPanos(double panos) {
+        if (panos > ihminen.getRaha() && ihminen.getRaha() >= 10) {
+            kayttoliittyma.asetaNappuloidenTila("panos");
+            kayttoliittyma.asetaTekstinaytto("Aseta pienempi panos.");
+            return false;
+        } else {
+            kayttoliittyma.asetaNappuloidenTila("jää");
+            kayttoliittyma.asetaTekstinaytto("Aseta panos ja paina jakoa!");
+            return true;
+        }
+    }
+
+    /**
+     * Joka kerta pakka alustetaan, koska ei haluta pelata vajaalla pakalla ja
+     * molempien pelaajien edellisen kierroksen kortit kerätään pois.
+     */
+    private void jaaKortit() {
+        korttipakka = new Korttipakka();
+        ihminen.tyhjennaKasi();
+        jakaja.tyhjennaKasi();
+        kayttoliittyma.tyhjenna();
+        ihminen.setRaha(-panos);
+        kayttoliittyma.asetaRahanaytto("" + ihminen.getRaha());
+
+        Pelikortti kortti;
+        //Aluksi molemmille jaetaan kaksi korttia.
+        for (int k = 0; k < 4; k++) {
+            kortti = korttipakka.otaKortti();
+            if (k % 2 == 0) {
+                ihminen.lisaaKortti(kortti);
+                kayttoliittyma.piirraKortti(kortti, ihminen);
+            } else {
+                jakaja.lisaaKortti(kortti);
+                kayttoliittyma.piirraKortti(kortti, jakaja);
+            }
+        }
+        kayttoliittyma.asetaTekstinaytto("Ota lisää tai jää tähän!");
+        kayttoliittyma.asetaNappuloidenTila("jako");
+    }
+
+    /**
+     * Pelaajan lisäkorttien otto. Jos summa menee yli 21, jatkaa peli suoraan
+     * voittajan tarkistukseen.
+     */
+    private void otaLisaa() {
+        Pelikortti kortti = korttipakka.otaKortti();
+        boolean alle21 = ihminen.lisaaKortti(kortti);
+        kayttoliittyma.piirraKortti(kortti, ihminen);
+        if (!alle21) {
+            kayttoliittyma.asetaNappuloidenTila("jää");
+            jakajaOttaaKortit();
+            tarkastaVoittaja(); 
+        } else {
+            kayttoliittyma.asetaTekstinaytto("Ota lisää tai jää tähän!");
+        }
+    }
+
+    /**
+     * Jakaja ottaa lisää kunnes summa on vähintään 17.
+     */
+    private void jakajaOttaaKortit() {
+        kayttoliittyma.naytaJakajanEkaKortti(jakaja);
+        boolean menikoYli;
+        while (jakaja.getSumma() < 17) {
+            Pelikortti kortti = korttipakka.otaKortti();
+            menikoYli = jakaja.lisaaKortti(kortti);
+            kayttoliittyma.piirraKortti(kortti, jakaja);
+        }
+        tarkastaVoittaja();
+    }
+
+    /**
+     * Hoitaa pelin lopun kun rahaa on alle 10 euroa.
+     */
+    private void rahatLopussa() {
+        kayttoliittyma.asetaNappuloidenTila("vainjako");
+        panos = ihminen.getRaha();
+        kayttoliittyma.asetaPanosnaytto("" + panos);
+        if (ihminen.getRaha() == 0) {
+            kayttoliittyma.asetaNappuloidenTila("loppu");
+            kayttoliittyma.asetaTekstinaytto("Rahasi loppuivat ja sinut heitettiin ulos pöydästä!");
+        }
+    }
+
+    /**
+     * Luo pelin
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        Blackjack peli = new Blackjack();
+    }
+
 }

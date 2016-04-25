@@ -45,7 +45,6 @@ public class KorttipakkaTest {
 
     /**
      * Test of sekoitus method, of class Korttipakka.
-     *
      * Testataan, että ensimmäinen kortti vaihtuu.
      */
     @Test

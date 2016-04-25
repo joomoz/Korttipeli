@@ -50,7 +50,7 @@ public class PelaajaTest {
      */
     @Test
     public void testTyhjennaKasi() {
-        pleijeri = new Pelaaja();
+        pleijeri = new Pelaaja("test");
         pleijeri.tyhjennaKasi();
         // TODO review the generated test code and remove the default call to fail.
         assertEquals(pleijeri.korttienMaara(), 0);
@@ -61,8 +61,8 @@ public class PelaajaTest {
      */
     @Test
     public void testLisaaKortti() {
-        pleijeri = new Pelaaja();
-        kortti = new Pelikortti(Maa.values()[1], 10);
+        pleijeri = new Pelaaja("test");
+        kortti = new Pelikortti(Maa.values()[1], 10, null);
         int maaraEnnen = pleijeri.korttienMaara();
         boolean arvo = pleijeri.lisaaKortti(kortti);
         assertEquals(maaraEnnen + 1, pleijeri.korttienMaara());
@@ -73,8 +73,8 @@ public class PelaajaTest {
      */
     @Test
     public void testGetSumma() {
-        pleijeri = new Pelaaja();
-        kortti = new Pelikortti(Maa.values()[1], 10);
+        pleijeri = new Pelaaja("test");
+        kortti = new Pelikortti(Maa.values()[1], 10, null);
         boolean arvo = pleijeri.lisaaKortti(kortti);
         assertEquals(pleijeri.getSumma(), 10);
     }
@@ -85,9 +85,9 @@ public class PelaajaTest {
     @Test
     public void testTulostaKasiFalse() {
         boolean naytaEkaKortti = false;
-        pleijeri = new Pelaaja();
-        Pelikortti kortti1 = new Pelikortti(Maa.values()[1], 2);
-        Pelikortti kortti2 = new Pelikortti(Maa.values()[1], 3);
+        pleijeri = new Pelaaja("test");
+        Pelikortti kortti1 = new Pelikortti(Maa.values()[1], 2, null);
+        Pelikortti kortti2 = new Pelikortti(Maa.values()[1], 3, null);
         pleijeri.lisaaKortti(kortti1);
         pleijeri.lisaaKortti(kortti2);
         pleijeri.tulostaKasi(naytaEkaKortti);
@@ -100,9 +100,9 @@ public class PelaajaTest {
     @Test
     public void testTulostaKasiTrue() {
         boolean naytaEkaKortti = true;
-        pleijeri = new Pelaaja();
-        Pelikortti kortti1 = new Pelikortti(Maa.values()[1], 2);
-        Pelikortti kortti2 = new Pelikortti(Maa.values()[1], 3);
+        pleijeri = new Pelaaja("test");
+        Pelikortti kortti1 = new Pelikortti(Maa.values()[1], 2, null);
+        Pelikortti kortti2 = new Pelikortti(Maa.values()[1], 3, null);
         pleijeri.lisaaKortti(kortti1);
         pleijeri.lisaaKortti(kortti2);
         pleijeri.tulostaKasi(naytaEkaKortti);
@@ -114,7 +114,7 @@ public class PelaajaTest {
      */
     @Test
     public void testGetRaha() {
-        pleijeri = new Pelaaja();
+        pleijeri = new Pelaaja("test");
         double expResult = 100.0;
         double result = pleijeri.getRaha();
         assertEquals(expResult, result, 0.0);
@@ -126,7 +126,7 @@ public class PelaajaTest {
     @Test
     public void testSetRaha() {;
         double maara = 15.5;
-        pleijeri = new Pelaaja();
+        pleijeri = new Pelaaja("test");
         pleijeri.setRaha(maara);
         assertEquals(pleijeri.getRaha(), 100 + maara, 0.01);
     }
@@ -136,7 +136,7 @@ public class PelaajaTest {
      */
     @Test
     public void korttienMaaraAlussa() {
-        pleijeri = new Pelaaja();
+        pleijeri = new Pelaaja("test");
         int expResult = 0;
         int result = pleijeri.korttienMaara();
         assertEquals(expResult, result);
@@ -147,10 +147,10 @@ public class PelaajaTest {
      */
     @Test
     public void korttienMaaraLisakortinJalkeen() {
-        pleijeri = new Pelaaja();
-        Pelikortti kortti1 = new Pelikortti(Maa.values()[1], 2);
-        Pelikortti kortti2 = new Pelikortti(Maa.values()[2], 3);
-        Pelikortti kortti3 = new Pelikortti(Maa.values()[3], 5);
+        pleijeri = new Pelaaja("test");
+        Pelikortti kortti1 = new Pelikortti(Maa.values()[1], 2, null);
+        Pelikortti kortti2 = new Pelikortti(Maa.values()[2], 3, null);
+        Pelikortti kortti3 = new Pelikortti(Maa.values()[3], 5, null);
         pleijeri.lisaaKortti(kortti1);
         pleijeri.lisaaKortti(kortti2);
         pleijeri.lisaaKortti(kortti3);
@@ -164,7 +164,7 @@ public class PelaajaTest {
      */
     @Test
     public void rahamaaranKasvatus() {
-        pleijeri = new Pelaaja();
+        pleijeri = new Pelaaja("test");
         pleijeri.setRaha(20);
         assertEquals(pleijeri.getRaha(), 120, 0.1);
     }
@@ -174,7 +174,7 @@ public class PelaajaTest {
      */
     @Test
     public void rahamaaranVahennys() {
-        pleijeri = new Pelaaja();
+        pleijeri = new Pelaaja("test");
         pleijeri.setRaha(-20);
         assertEquals(pleijeri.getRaha(), 80, 0.1);
     }

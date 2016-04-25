@@ -40,7 +40,7 @@ public class PelikorttiTest {
      */
     @Test
     public void testLuoKortti() {
-        testikortti = new Pelikortti(Maa.values()[3], 10);
+        testikortti = new Pelikortti(Maa.values()[3], 10, null);
         assertEquals(Maa.values()[3], testikortti.getMaa());
         assertEquals(testikortti.getNumero(), 10);
     }
@@ -50,7 +50,7 @@ public class PelikorttiTest {
      */
     @Test
     public void testTulostus() {
-        testikortti = new Pelikortti(Maa.values()[1], 13);
+        testikortti = new Pelikortti(Maa.values()[1], 13, null);
         assertTrue(testikortti.toString().contains("Hertta Kuningas"));
     }
     
