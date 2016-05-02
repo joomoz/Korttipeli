@@ -19,8 +19,10 @@ public class PelaajaTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 
-    Pelaaja pleijeri;
-    Pelikortti kortti;
+    private Pelaaja pleijeri;
+    private Pelikortti kortti;
+    private Pelikortti kortti2;
+    private Pelikortti kortti3;
 
     public PelaajaTest() {
     }
@@ -37,6 +39,7 @@ public class PelaajaTest {
     public void setUp() {
         System.setOut(new PrintStream(outContent));
         System.setErr(new PrintStream(errContent));
+        pleijeri = new Pelaaja("test");
     }
 
     @After
@@ -46,67 +49,98 @@ public class PelaajaTest {
     }
 
     /**
-     * Test of tyhjennaKasi method, of class Pelaaja.
+     * Testaa käden tyhjentämisen.
      */
     @Test
     public void testTyhjennaKasi() {
-        pleijeri = new Pelaaja("test");
         pleijeri.tyhjennaKasi();
-        // TODO review the generated test code and remove the default call to fail.
         assertEquals(pleijeri.korttienMaara(), 0);
     }
 
     /**
-     * Test of lisaaKortti method, of class Pelaaja.
+     * Testaa lisäkortin ottamisen.
      */
     @Test
-    public void testLisaaKortti() {
-        pleijeri = new Pelaaja("test");
+    public void korttienMaaraKasvaaYhdella() {
         kortti = new Pelikortti(Maa.values()[1], 10, null);
         int maaraEnnen = pleijeri.korttienMaara();
         boolean arvo = pleijeri.lisaaKortti(kortti);
         assertEquals(maaraEnnen + 1, pleijeri.korttienMaara());
     }
-
+    
     /**
-     * Test of getSumma method, of class Pelaaja.
+     * Testaa lisäkortin ottamisen palauttaamaa totuusarvoa.
      */
     @Test
-    public void testGetSumma() {
-        pleijeri = new Pelaaja("test");
+    public void arvoTrueKunArvoKadenArvoAlle21() {
+        kortti = new Pelikortti(Maa.values()[1], 10, null);
+        boolean arvo = pleijeri.lisaaKortti(kortti);
+        assertTrue(arvo);
+    }
+    
+    /**
+     * Testaa lisäkortin ottamisen palauttaamaa totuusarvoa, 
+     * kun arvo menee yli 21.
+     */
+    @Test
+    public void arvoFalseKunKadenArvoYli21() {
+        kortti = new Pelikortti(Maa.values()[0], 8, null);
+        kortti2 = new Pelikortti(Maa.values()[1], 8, null);
+        kortti3 = new Pelikortti(Maa.values()[2], 8, null);
+        boolean arvo = pleijeri.lisaaKortti(kortti);
+        arvo = pleijeri.lisaaKortti(kortti2);
+        arvo = pleijeri.lisaaKortti(kortti3);
+        assertFalse(arvo);
+    }
+
+    /**
+     * Testaa kädessä olevien korttien summan laskemisen.
+     * Tässä testissä vain yksi kortti, arvo 10.
+     */
+    @Test
+    public void kadenSumma10() {
         kortti = new Pelikortti(Maa.values()[1], 10, null);
         boolean arvo = pleijeri.lisaaKortti(kortti);
         assertEquals(pleijeri.getSumma(), 10);
     }
-
+    
     /**
-     * Test of tulostaKasi method, of class Pelaaja.
+     * Testaa kädessä olevien korttien summan laskemisen.
+     * Tässä testissä vain yksi kortti, Kuningas, arvo 10.
      */
     @Test
-    public void testTulostaKasiFalse() {
-        boolean naytaEkaKortti = false;
-        pleijeri = new Pelaaja("test");
-        Pelikortti kortti1 = new Pelikortti(Maa.values()[1], 2, null);
-        Pelikortti kortti2 = new Pelikortti(Maa.values()[1], 3, null);
-        pleijeri.lisaaKortti(kortti1);
-        pleijeri.lisaaKortti(kortti2);
-        pleijeri.tulostaKasi(naytaEkaKortti);
-        assertEquals("Kortti vielä piilossa\r\nHertta 3\r\n", outContent.toString());
+    public void kadenSummaKunKadessaKuningas() {
+        kortti = new Pelikortti(Maa.values()[1], 13, null);
+        boolean arvo = pleijeri.lisaaKortti(kortti);
+        assertEquals(pleijeri.getSumma(), 10);
     }
-
+    
     /**
-     * Test of tulostaKasi method, of class Pelaaja.
+     * Testaa kädessä olevien korttien summan laskemisen.
+     * Tässä testissä otetaan kaksi korttia, Ässä ja 4, joiden summa tulisi olla 15.
      */
     @Test
-    public void testTulostaKasiTrue() {
-        boolean naytaEkaKortti = true;
-        pleijeri = new Pelaaja("test");
-        Pelikortti kortti1 = new Pelikortti(Maa.values()[1], 2, null);
-        Pelikortti kortti2 = new Pelikortti(Maa.values()[1], 3, null);
-        pleijeri.lisaaKortti(kortti1);
-        pleijeri.lisaaKortti(kortti2);
-        pleijeri.tulostaKasi(naytaEkaKortti);
-        assertEquals("Hertta 2\r\nHertta 3\r\n", outContent.toString());
+    public void kadenSummaAssallaJaNelosella() {
+        kortti = new Pelikortti(Maa.values()[1], 4, null);
+        boolean arvo = pleijeri.lisaaKortti(kortti);
+        kortti2 = new Pelikortti(Maa.values()[1], 1, null);
+        arvo = pleijeri.lisaaKortti(kortti2);
+        assertEquals(pleijeri.getSumma(), 15);
+    }
+    
+    /**
+     * Testaa kädessä olevien korttien summan laskemisen.
+     * Tässä testissä otetaan kolme korttia, kaksi ässää ja 9, joiden summa tulisi olla 21.
+     */
+    @Test
+    public void kadenSummaKahdellaAssalla() {
+        kortti = new Pelikortti(Maa.values()[1], 1, null);
+        boolean arvo = pleijeri.lisaaKortti(kortti);
+        kortti2 = new Pelikortti(Maa.values()[2], 1, null);
+        arvo = pleijeri.lisaaKortti(kortti2);
+        kortti3 = new Pelikortti(Maa.values()[3], 9, null);
+        arvo = pleijeri.lisaaKortti(kortti3);
+        assertEquals(pleijeri.getSumma(), 21);
     }
 
     /**
@@ -114,7 +148,6 @@ public class PelaajaTest {
      */
     @Test
     public void testGetRaha() {
-        pleijeri = new Pelaaja("test");
         double expResult = 100.0;
         double result = pleijeri.getRaha();
         assertEquals(expResult, result, 0.0);
@@ -126,7 +159,6 @@ public class PelaajaTest {
     @Test
     public void testSetRaha() {;
         double maara = 15.5;
-        pleijeri = new Pelaaja("test");
         pleijeri.setRaha(maara);
         assertEquals(pleijeri.getRaha(), 100 + maara, 0.01);
     }
@@ -136,7 +168,6 @@ public class PelaajaTest {
      */
     @Test
     public void korttienMaaraAlussa() {
-        pleijeri = new Pelaaja("test");
         int expResult = 0;
         int result = pleijeri.korttienMaara();
         assertEquals(expResult, result);
@@ -147,11 +178,10 @@ public class PelaajaTest {
      */
     @Test
     public void korttienMaaraLisakortinJalkeen() {
-        pleijeri = new Pelaaja("test");
-        Pelikortti kortti1 = new Pelikortti(Maa.values()[1], 2, null);
-        Pelikortti kortti2 = new Pelikortti(Maa.values()[2], 3, null);
-        Pelikortti kortti3 = new Pelikortti(Maa.values()[3], 5, null);
-        pleijeri.lisaaKortti(kortti1);
+        kortti = new Pelikortti(Maa.values()[1], 2, null);
+        kortti2 = new Pelikortti(Maa.values()[2], 3, null);
+        kortti3 = new Pelikortti(Maa.values()[3], 5, null);
+        pleijeri.lisaaKortti(kortti);
         pleijeri.lisaaKortti(kortti2);
         pleijeri.lisaaKortti(kortti3);
         int expResult = 3;
@@ -164,7 +194,6 @@ public class PelaajaTest {
      */
     @Test
     public void rahamaaranKasvatus() {
-        pleijeri = new Pelaaja("test");
         pleijeri.setRaha(20);
         assertEquals(pleijeri.getRaha(), 120, 0.1);
     }
@@ -174,7 +203,6 @@ public class PelaajaTest {
      */
     @Test
     public void rahamaaranVahennys() {
-        pleijeri = new Pelaaja("test");
         pleijeri.setRaha(-20);
         assertEquals(pleijeri.getRaha(), 80, 0.1);
     }

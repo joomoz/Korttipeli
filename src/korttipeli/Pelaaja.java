@@ -14,11 +14,12 @@ public class Pelaaja {
 
     /**
      * Konstruktori Pelaajalle.
+     *
      * @param pelaaja :n nimi
      */
     public Pelaaja(String pelaaja) {
         this.nimi = pelaaja;
-        this.peliraha = 15;
+        this.peliraha = 100;
         this.korttienmaara = 0;
         this.pelikasi = new Pelikortti[10];
     }
@@ -77,34 +78,19 @@ public class Pelaaja {
         return summa;
     }
 
-    /**
-     * Metodi tulostaa kädessä olevat kortit.
-     *
-     * @param naytaEkaKortti tarvittaessa ei näytä kortin arvoa
-     */
-    public void tulostaKasi(boolean naytaEkaKortti) {
-        for (int i = 0; i < this.korttienmaara; i++) {
-            if (i == 0 && !naytaEkaKortti) {
-                System.out.println("Kortti vielä piilossa");
-            } else {
-                System.out.println(this.pelikasi[i]);
-            }
-        }
-    }
-    
     public Pelikortti getKortti(int monesko) {
         return this.pelikasi[monesko];
     }
 
     /**
-     * Metodi palauttaa pelaajan rahamäärän.
+     * Metodi palauttaa pelaajan nimen.
      *
      * @return peliraha
      */
     public String getNimi() {
         return this.nimi;
     }
-    
+
     /**
      * Metodi palauttaa pelaajan rahamäärän.
      *
@@ -130,6 +116,6 @@ public class Pelaaja {
      */
     public int korttienMaara() {
         return this.korttienmaara;
-    } 
-    
+    }
+
 }

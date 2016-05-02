@@ -18,7 +18,7 @@ public class KorttipakkaTest {
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
-    Korttipakka pakka;
+    private Korttipakka pakka;
 
     public KorttipakkaTest() {
     }
@@ -35,6 +35,7 @@ public class KorttipakkaTest {
     public void setUp() {
         System.setOut(new PrintStream(outContent));
         System.setErr(new PrintStream(errContent));
+        pakka = new Korttipakka();
     }
 
     @After
@@ -44,12 +45,10 @@ public class KorttipakkaTest {
     }
 
     /**
-     * Test of sekoitus method, of class Korttipakka.
      * Testataan, että ensimmäinen kortti vaihtuu.
      */
     @Test
-    public void testSekoitus() {
-        pakka = new Korttipakka();
+    public void sekoitusVaihtaaEnsimmaisenKortin() {
         Pelikortti kortti1 = pakka.ensimmainenKortti();
         pakka.sekoitus();
         Pelikortti kortti2 = pakka.ensimmainenKortti();
@@ -57,15 +56,33 @@ public class KorttipakkaTest {
     }
 
     /**
-     * Test of otaKortti method, of class Korttipakka. Korttimäärän pitäisi
-     * vähentyä yhdellä.
+     * Testataan korttimäärän vähentymistä.
+     *
      */
     @Test
-    public void testOtaKortti() {
-        pakka = new Korttipakka();
+    public void otaKortti() {
         int maaraAlussa = pakka.korttienMaara();
         Pelikortti kortti = pakka.otaKortti();
         assertEquals(maaraAlussa - 1, pakka.korttienMaara());
+    }
+
+    /**
+     * Testataan, että uudessa pakassa on 52 korttia.
+     *
+     */
+    @Test
+    public void korttienMaaraOnAlussa52() {
+        assertEquals(pakka.korttienMaara(), 52);
+    }
+
+    /**
+     * Testataan ensimmäisen kortin ottamista.
+     *
+     */
+    @Test
+    public void otaKorttiAntaaPelikortin() {
+        Pelikortti kortti = pakka.otaKortti();
+        assertNotNull(kortti);
     }
 
 }

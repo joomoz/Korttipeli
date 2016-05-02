@@ -17,8 +17,10 @@ public class Kayttoliittyma extends JFrame implements Runnable {
     private javax.swing.JButton exitNappi;
     private javax.swing.JButton lisaaNappi;
     private javax.swing.JButton jaaNappi;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabelRaha;
+    private javax.swing.JLabel jLabelPanos;
+    private javax.swing.JLabel jLabelJakajanSumma;
+    private javax.swing.JLabel jLabelPelaajanSumma;
     private javax.swing.JLayeredPane jakajanKortit;
     private javax.swing.JLayeredPane pelaajanKortit;
     private javax.swing.JPanel jPanel1;
@@ -41,16 +43,18 @@ public class Kayttoliittyma extends JFrame implements Runnable {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jakajanKortit = new javax.swing.JLayeredPane();
+        jLabelJakajanSumma = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         pelaajanKortit = new javax.swing.JLayeredPane();
+        jLabelPelaajanSumma = new javax.swing.JLabel();
         lisaaNappi = new javax.swing.JButton();
         jaaNappi = new javax.swing.JButton();
         panoksenSaadin = new javax.swing.JSlider();
         jakoNappi = new javax.swing.JButton();
         tekstinaytto = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelRaha = new javax.swing.JLabel();
         rahanaytto = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jLabelPanos = new javax.swing.JLabel();
         panosnaytto = new javax.swing.JLabel();
         exitNappi = new javax.swing.JButton();
 
@@ -74,6 +78,9 @@ public class Kayttoliittyma extends JFrame implements Runnable {
                 .addGap(0, 131, Short.MAX_VALUE)
         );
 
+        jLabelJakajanSumma.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelJakajanSumma.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -82,12 +89,18 @@ public class Kayttoliittyma extends JFrame implements Runnable {
                         .addContainerGap()
                         .addComponent(jakajanKortit)
                         .addContainerGap())
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(278, 278, 278)
+                        .addComponent(jLabelJakajanSumma, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jakajanKortit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 33, Short.MAX_VALUE))
+                        .addGap(0, 33, Short.MAX_VALUE)
+                        .addComponent(jLabelJakajanSumma, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                        .addContainerGap())
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pelaaja", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, fontti));
@@ -105,6 +118,9 @@ public class Kayttoliittyma extends JFrame implements Runnable {
                 .addGap(0, 131, Short.MAX_VALUE)
         );
 
+        jLabelPelaajanSumma.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelPelaajanSumma.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -113,12 +129,18 @@ public class Kayttoliittyma extends JFrame implements Runnable {
                         .addContainerGap()
                         .addComponent(pelaajanKortit)
                         .addContainerGap())
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabelPelaajanSumma, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(276, 276, 276))
         );
         jPanel3Layout.setVerticalGroup(
                 jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(pelaajanKortit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 36, Short.MAX_VALUE))
+                        .addGap(0, 36, Short.MAX_VALUE)
+                        .addComponent(jLabelPelaajanSumma, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                        .addContainerGap())
         );
 
         lisaaNappi.setFont(fontti);
@@ -155,14 +177,20 @@ public class Kayttoliittyma extends JFrame implements Runnable {
         tekstinaytto.setText("Blackjack");
         tekstinaytto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        jLabel1.setFont(fontti);
-        jLabel1.setText("Rahaa:");
+        jLabelRaha.setFont(fontti);
+        jLabelRaha.setText("Rahaa:");
+
+        jLabelPanos.setFont(fontti);
+        jLabelPanos.setText("Panos:");
+
+        jLabelJakajanSumma.setFont(fontti);
+        jLabelJakajanSumma.setText("-");
+
+        jLabelPelaajanSumma.setFont(fontti);
+        jLabelPelaajanSumma.setText("-");
 
         rahanaytto.setFont(fontti);
         rahanaytto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-
-        jLabel2.setFont(fontti);
-        jLabel2.setText("Panos:");
 
         panosnaytto.setFont(fontti);
         panosnaytto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -195,11 +223,11 @@ public class Kayttoliittyma extends JFrame implements Runnable {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(tekstinaytto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
+                                        .addComponent(jLabelRaha)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(rahanaytto, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel2)
+                                        .addComponent(jLabelPanos)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(panosnaytto, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())
@@ -214,9 +242,9 @@ public class Kayttoliittyma extends JFrame implements Runnable {
                         .addComponent(tekstinaytto, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                                .addComponent(jLabelRaha, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
                                 .addComponent(rahanaytto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabelPanos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(panosnaytto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -269,6 +297,14 @@ public class Kayttoliittyma extends JFrame implements Runnable {
     public void asetaPanosnaytto(String text) {
         panosnaytto.setText(text);
     }
+    
+    public void asetaJakajanKadenSumma(String text) {
+        jLabelJakajanSumma.setText(text);
+    }
+    
+    public void asetaPelaajanKadenSumma(String text) {
+        jLabelPelaajanSumma.setText(text);
+    }
 
     /**
      * Piirtää kortin käyttöliittymään.
@@ -316,6 +352,10 @@ public class Kayttoliittyma extends JFrame implements Runnable {
         }
     }
 
+    /**
+     * Asettaa valintapainikkeet joko päälle tai pois päältä eri tilanteiden mukaan.
+     * @param toiminto 
+     */
     public void asetaNappuloidenTila(String toiminto) {
         switch (toiminto) {
             case "jako":

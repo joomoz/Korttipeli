@@ -52,26 +52,5 @@ public class Pelikortti {
         return this.kuva;
     }
 
-    /**
-     * Metodi tulostukseen.
-     * @return tulostus String
-     */
-    @Override
-    public String toString() {
-        if(this.numero == 11) {
-            return this.maa + " Jätkä";  
-        }
-        if(this.numero == 12) {
-            return this.maa + " Rouva";  
-        }
-        if(this.numero == 13) {
-            return this.maa + " Kuningas";  
-        }
-        if(this.numero == 1) {
-            return this.maa + " Ässä";  
-        } else
-        return this.maa + " " + this.numero;    
-    }
-
 }
 

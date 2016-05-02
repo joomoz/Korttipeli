@@ -33,7 +33,6 @@ public class Korttipakka {
                 try {
                     kuva = ImageIO.read(new File("cards/" + (maa + 1) + "" + numero + ".png"));
                 } catch (IOException ex) {
-                    System.out.println("Kortin kuva puuttuu!");
                     System.exit(52);
                 }
                 this.pakanKortit[kortinPaikka] = new Pelikortti(Maa.values()[maa], numero, kuva);

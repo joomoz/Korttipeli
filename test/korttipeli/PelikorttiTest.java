@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
  */
 public class PelikorttiTest {
 
-    Pelikortti testikortti;
+    private Pelikortti testikortti;
     
     public PelikorttiTest() {
     }
@@ -39,19 +39,10 @@ public class PelikorttiTest {
      * Testataan että kortti luodaan oikein.
      */
     @Test
-    public void testLuoKortti() {
+    public void korttiLuodaanOikein() {
         testikortti = new Pelikortti(Maa.values()[3], 10, null);
         assertEquals(Maa.values()[3], testikortti.getMaa());
         assertEquals(testikortti.getNumero(), 10);
-    }
-    
-    /**
-     * Testataan tulostusta.
-     */
-    @Test
-    public void testTulostus() {
-        testikortti = new Pelikortti(Maa.values()[1], 13, null);
-        assertTrue(testikortti.toString().contains("Hertta Kuningas"));
     }
     
 }
